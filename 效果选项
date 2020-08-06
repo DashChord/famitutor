@@ -1,0 +1,145 @@
+注：文中的tick应为Famitracker模拟的机器周期 （就在设定乐器的时候那个最小的时间单位）
+
+Frame即每一个“小节” （行标记00-xx为一个小节）
+
+General effects （通用效果）
+
+0xy - Arpeggio (自动琶音）
+
+Changes the pitch of the note every tick, with base + x and base + y semitones. Use 00 to disable.
+
+Example: 047 to simulate a major chord.
+
+根据基音、基音 + x、基音 + y 个半音循环更改音高，设定为00取消该功能
+
+例：设定为047即可以产生出大三和弦
+
+1xx - Slide up （向上滑音）
+
+Continuously slides the pitch up, with xx steps in pitch units every tick. Use 00 to disable.
+
+使音高持续上升，xx为每个tick上升的高度。设定为00取消该功能
+
+2xx - Slide down（向下滑音）
+
+Continuously slides the pitch down, with xx steps in pitch units every tick. Use 00 to disable.
+
+使音高持续下降，xx为每个tick下降的高度。设定为00取消该功能
+
+3xx - Portamento（过渡滑音）
+
+Automatically slides to new notes, with xx steps in pitch units every tick. Use 00 to disable.
+
+自动从之前的音过渡到新的音，每个tick改变xx个音高。设定为00取消该功能
+
+4xx - Vibrato（音高颤音）
+
+Applies sine vibrato to notes. x is speed (0 to disable) and y is the depth of the vibrato.
+
+使音高产生类似正弦波的运动。x是周期（0为取消），y是振幅。
+
+7xy - Tremolo（力度颤音）
+
+Applies sine tremolo to notes. x is speed (0 to disable) and y is the depth of the tremolo.
+
+使音量产生类似正弦波的运动。x是周期（0为取消），y是振幅。
+
+Axy - Volume slide（音量变化）
+
+Automatic volume slide. Use A0y to slide up and Ax0 to slide down. The x and y parameters affects the volume column value as fractions of 8. Use 00 to disable.
+
+使音量自动滑动，使用A0y使音量向上滑动，使用Ax0使音量向下滑动。参数x和y会根据对8取模的结果影响变化，设定为00取消该功能。
+
+Bxx - Jump（跳跃至某Frame）
+
+Jump to frame/order xx.
+
+跳跃至标记为xx的Frame。
+
+注：此功能可用来改变乐曲的循环方式
+
+Cxx - Halt（终止）
+
+Halt playback of the module, use this to prevent infinite looping of songs. (xx has no effect)
+
+结束该module的播放，用来阻值音乐的循环播放。（xx在这里没有效果）
+
+Dxx - Skip（跳跃至下一frame）
+
+Skip to next frame/order and jump to row xx.
+
+跳跃至下一frame的xx行。
+
+Exx - Volume（音量）
+
+Sets the channel volume.
+
+This effect is obsolete and remains for compatibility reasons, prefer to use the volume column instead.
+
+设定该channel的音量。
+
+该效果已经因为一些原因被废弃，请使用窗口中的音量列来直接调整。
+
+Fxx - Speed / Tempo
+
+Controls the speed and tempo setting of the module. xx between 01 - 1F sets the speed and xx between 20 - FF sets the tempo.
+
+控制speed和tempo这两个参数。xx在01-1F之间用来改变speed，在20-FF之间用来改变tempo。
+注：实际的bpm为tempo * 6 / speed 即当speed设定为6时，tempo即为实际的bpm
+
+Gxx - Note delay （音符延迟）
+
+Delays the current row for xx number of ticks before triggering the note, for the specified channel only.
+
+在触发当前行的音符之前延迟xx个tick，只对特定channel有效果。
+
+Hxy - Hardware sweep up（硬件升频）
+
+Triggers the hardware sweep up. x is period (0 - 7) and y is the shift value (1 - 7).
+
+使硬件升频，x是周期（0-7），y是上升的值（1-7）
+
+Ixy - Hardware sweep down（硬件降频）
+
+Triggers the hardware sweep down. x is period (0 - 7) and y is the shift value (1 - 7). 
+
+使硬件降频，x是周期（0-7），y是下降的值（1-7）
+
+注：以上两个效果均只对2A03芯片（NES）的脉冲（方波）channel起作用。
+
+注2：笔者暂时不太清楚这个效果和音高上升\下降有何区别，求菊苣们指教。
+
+Pxx - Fine pitch（精细调节音高）
+
+Sets the fine pitch in xx pitch units. 80 means in tune.
+
+对音高进行精细调节，xx为调节的级数。80为原调。
+
+Qxy - Note slide up（上滑至某音）
+
+ Triggers a targeted note slide up. x is the speed and y is the number of semitones above the current one to slide to.
+
+使当前音上滑至特定音。x为速度，y为上滑的半音数。
+
+Rxy - Note slide down（下滑至某音）
+
+ Triggers a targeted note slide down. x is the speed and y is the number of semitones above the current one to slide to.
+
+使当前音下滑至特定音。x为速度，y为下滑的半音数。
+
+Sxx - Delayed cut（延迟阶段）
+
+Cuts the active note after xx number of ticks.
+
+在xx个tick之后切断当前音符。
+
+Vxx - Timbre Control（音色控制）
+
+This effect controls the duty period of the pulse channels and noise mode of the noise channel. On N163 it can be used to select a wave.
+Valid values are:
+
+2A03/MMC5 pulse channels: 00 - 03
+Noise channel: 00 - 01
+VRC6 pulse channels: 00 - 07
+N163 channels: 00 - 0F
+这个效果用来改变channel的音色。在N163芯片上被用来选择波形。
